@@ -11,6 +11,7 @@ interface Props {
   name: string;
   register: any;
   isRequired?: boolean;
+  options?: string[];
 }
 
 const TextInput: React.FC<Props> = ({
@@ -22,20 +23,50 @@ const TextInput: React.FC<Props> = ({
   type,
   isRequired,
   name,
+  options,
 }) => {
+
   return (
     <>
       <label htmlFor="username" className="text-variant1">
         {label} {isRequired ? <span className="text-primary">*</span> : ""}
       </label>
-      <input
+
+      {type === "select" && options ? (
+        <select
+          {...register(name)}
+          className=" border-line px-4 pt-3 pb-3 w-full rounded-lg mt-2 "
+          id={id}
+          name={name}
+        >
+          <option value="" disabled selected>
+            {placeholder}
+          </option>
+          {options.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      ) : (
+        <input
+          {...register(name)}
+          className="border-line px-4 pt-3 pb-3 w-full rounded-lg mt-2" 
+          id={id}
+          name={name}
+          type={type}
+          placeholder={placeholder}
+        />
+      )}
+
+      {/* <input
         {...register(name)}
         className="border-line px-4 pt-3 pb-3 w-full rounded-lg mt-2"
         id={id}
         name={name}
         type={type}
         placeholder={placeholder}
-      />
+      /> */}
     </>
   );
 };

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.Marriage_planner.Marriage_planner.model.ResponseDTO;
 import com.Marriage_planner.Marriage_planner.model.ResponseUser;
 import com.Marriage_planner.Marriage_planner.model.User;
-import com.Marriage_planner.Marriage_planner.model.Vender;
-import com.Marriage_planner.Marriage_planner.repo.venderRepo;
+import com.Marriage_planner.Marriage_planner.model.Vendor;
+import com.Marriage_planner.Marriage_planner.repo.vendorRepo;
 import com.Marriage_planner.Marriage_planner.services.MyUserDetailsService;
 import com.Marriage_planner.Marriage_planner.services.userService;
 

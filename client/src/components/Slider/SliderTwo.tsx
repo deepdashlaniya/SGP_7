@@ -10,6 +10,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { TentType } from '@/type/TentType';
 import dynamic from "next/dynamic"
 const MapComponent = dynamic(() => import("@/components/Other/MapComponent"), { ssr: false })
+import image from "../../../public/images/download.jpeg"
 
 
 interface GuestType {
@@ -109,8 +110,9 @@ const SliderTwo = () => {
 
     return (
         <>
-            <div className="slider-block style-one relative h-[508px] pb-12">
-                <div className="bg-img w-full h-full">
+            <div className="slider-block style-one relative h-[508px] pb-12 bg-img w-full h-full">
+                {/* <Image src={image} alt={''} width={"full"}height={900}/> */}
+                {/* <div className="bg-img w-full h-full">
                     <MapComponent />
                 </div>
                 <div className="container relative z-[400] lg:-mt-[90px] -mt-[124px]">
@@ -130,7 +132,7 @@ const SliderTwo = () => {
                                 <div className="relative lg:w-full md:w-[48%] w-full">
                                     <div className='select-block w-full' onClick={handleOpenDate}>
                                         <Icon.CalendarBlank className='icon text-xl left-5' />
-                                        {/* <input className='body2 w-full pl-12 pr-5 py-3 border border-outline rounded-lg' type="text" placeholder='Add Dates' /> */}
+                                        {/* <input className='body2 w-full pl-12 pr-5 py-3 border border-outline rounded-lg' type="text" placeholder='Add Dates' /> }
                                         <input
                                             className='body2 w-full pl-12 pr-5 py-3 border border-outline rounded-lg'
                                             type="text"
@@ -260,7 +262,7 @@ const SliderTwo = () => {
                             </form>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </>
     )

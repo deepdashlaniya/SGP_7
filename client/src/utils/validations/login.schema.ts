@@ -5,4 +5,7 @@ export const LoginSchema = z.object({
   password: z.string().min(3, "Please enter password"),
 });
 
+
+
 export type LoginType = z.infer<typeof LoginSchema>;
+

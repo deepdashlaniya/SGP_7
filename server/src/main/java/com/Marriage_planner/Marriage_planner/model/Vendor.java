@@ -6,13 +6,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 
 @Entity
-public class Vender {
+public class Vendor {
     @Id
     private int id;
     @Column(name = "owner_name") 
     private String ownerName;
     @Column(name = "business_name") 
     private String businessName;
+    private String businessType;
     private String address1;
     private String address2;
     private String city;
@@ -31,6 +32,8 @@ public class Vender {
     @Column(columnDefinition = "TEXT") 
     private String facilities;
     private boolean status;
+    
+    
 
     public int getId() {
         return id;
@@ -54,6 +57,15 @@ public class Vender {
 
     public void setBusinessName(String businessName) {
         this.businessName = businessName;
+    }
+
+    
+    public String getBusinessType() {
+        return businessType;
+    }
+
+    public void setBusinessType(String businessType) {
+        this.businessType = businessType;
     }
 
     public String getAddress1() {
@@ -151,5 +163,6 @@ public class Vender {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
 
 }
