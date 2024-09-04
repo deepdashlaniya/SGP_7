@@ -303,7 +303,7 @@ const RegisterPage = () => {
                   type="select"
                   id="role"
                   label="Role"
-                  options={['User', 'Admin']}
+                  options={['User', 'Business']}
                 />
                 <ErrorMessage message={errors.role?.message} />
 

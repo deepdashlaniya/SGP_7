@@ -35,7 +35,7 @@ const TextInput: React.FC<Props> = ({
       {type === "select" && options ? (
         <select
           {...register(name)}
-          className=" border-line px-4 pt-3 pb-3 w-full rounded-lg mt-2 "
+          className="border-line border-solid border-2 border-slate-50 px-4 pt-3 pb-3 w-full  rounded-lg mt-2 "
           id={id}
           name={name}
         >

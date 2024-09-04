@@ -51,82 +51,21 @@ const HeaderOne = () => {
                         <ul className='flex items-center xl:gap-[50px] gap-10 h-full'>
                             <li className='h-full relative'>
                                 <Link
-                                    href="#!"
+                                    href="/"
                                     className={`text-button duration-300 h-full flex items-center justify-center gap-1 ${pathname === '/' || pathname.includes('/homepages/') ? 'active' : ''}`}
                                 >
                                     Home
                                 </Link>
-                                <div className="sub-menu absolute bg-white">
-                                    <ul>
-                                        <li>
-                                            <Link href="/" className={`link text-button text-variant1 py-4 pl-6 pr-16 border-b border-outline duration-300 ${pathname === '/' ? 'active' : ''}`}>
-                                                Homepage 1
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/homepages/home2" className={`link text-button text-variant1 py-4 pl-6 pr-16 border-b border-outline duration-300 ${pathname === '/homepages/home2' ? 'active' : ''}`}>
-                                                Homepage 2
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/homepages/home3" className={`link text-button text-variant1 py-4 pl-6 pr-16 duration-300 ${pathname === '/homepages/home3' ? 'active' : ''}`}>
-                                                Homepage 3
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </div>
+                
                             </li>
                             <li className='h-full relative'>
                                 <Link
-                                    href="#!"
+                                    href="/camp/topmap-list"
                                     className={`text-button duration-300 h-full flex items-center justify-center gap-1 ${pathname.includes('/camp/') ? 'active' : ''}`}
                                 >
                                     Camps
                                 </Link>
-                                <div className="sub-menu absolute bg-white">
-                                    <ul>
-                                        <li>
-                                            <Link href="/camp/topmap-grid" className={`link text-button text-variant1 py-4 pl-6 pr-16 border-b border-outline duration-300 ${pathname === '/camp/topmap-grid' ? 'active' : ''}`}>
-                                                Find Topmap Grid
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/camp/topmap-list" className={`link text-button text-variant1 py-4 pl-6 pr-16 border-b border-outline duration-300 ${pathname === '/camp/topmap-list' ? 'active' : ''}`}>
-                                                Find Topmap List
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/camp/filter-scroll" className={`link text-button text-variant1 py-4 pl-6 pr-16 border-b border-outline duration-300 ${pathname === '/camp/filter-scroll' ? 'active' : ''}`}>
-                                                Filters Scrolls
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/camp/filter-dropdown" className={`link text-button text-variant1 py-4 pl-6 pr-16 border-b border-outline duration-300 ${pathname === '/camp/filter-dropdown' ? 'active' : ''}`}>
-                                                Filters Dropdown
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/camp/topmap-sidebar" className={`link text-button text-variant1 py-4 pl-6 pr-16 border-b border-outline duration-300 ${pathname === '/camp/topmap-sidebar' ? 'active' : ''}`}>
-                                                Find Topmap Sidebar
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/camp/halfmap-grid" className={`link text-button text-variant1 py-4 pl-6 pr-16 border-b border-outline duration-300 ${pathname === '/camp/halfmap-grid' ? 'active' : ''}`}>
-                                                Find Halfmap Grid
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/camp/halfmap-list" className={`link text-button text-variant1 py-4 pl-6 pr-16 border-b border-outline duration-300 ${pathname === '/camp/halfmap-list' ? 'active' : ''}`}>
-                                                Find Halfmap List
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/camp/tent-detail" className={`link text-button text-variant1 py-4 pl-6 pr-16 duration-300 ${pathname === '/camp/tent-detail' ? 'active' : ''}`}>
-                                                Tent Details
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </div>
+                                
                             </li>
                             <li className='h-full relative'>
                                 <Link
@@ -136,33 +75,7 @@ const HeaderOne = () => {
                                     About us
                                 </Link>
                             </li>
-                            <li className='h-full relative'>
-                                <Link
-                                    href="#!"
-                                    className={`text-button duration-300 h-full flex items-center justify-center gap-1 ${pathname.includes('/blog/') ? 'active' : ''}`}
-                                >
-                                    Blog
-                                </Link>
-                                <div className="sub-menu absolute bg-white">
-                                    <ul>
-                                        <li>
-                                            <Link href="/blog/default" className={`link text-button text-variant1 py-4 pl-6 pr-16 border-b border-outline duration-300 ${pathname === '/blog/default' ? 'active' : ''}`}>
-                                                Blog Default
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/blog/grid" className={`link text-button text-variant1 py-4 pl-6 pr-16 border-b border-outline duration-300 ${pathname === '/blog/grid' ? 'active' : ''}`}>
-                                                Blog Grid
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/blog/detail" className={`link text-button text-variant1 py-4 pl-6 pr-16 duration-300 ${pathname === '/blog/detail' ? 'active' : ''}`}>
-                                                Blog Detail
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
+                            
                             <li className='h-full relative'>
                                 <Link
                                     href="#!"
@@ -182,11 +95,7 @@ const HeaderOne = () => {
                                                 FAQs
                                             </Link>
                                         </li>
-                                        <li>
-                                            <Link href="/pages/review" className={`link text-button text-variant1 py-4 pl-6 pr-16 duration-300 ${pathname === '/pages/review' ? 'active' : ''}`}>
-                                                Review
-                                            </Link>
-                                        </li>
+                                        
                                     </ul>
                                 </div>
                             </li>
@@ -256,25 +165,7 @@ const HeaderOne = () => {
                                                 <Icon.CaretLeft />
                                                 Back
                                             </div>
-                                            <div className="list-nav-item w-full pt-2 pb-6">
-                                                <ul>
-                                                    <li>
-                                                        <Link href="/" className={`nav-item-mobile text-button link text-variant1 duration-300 has-line has-line ${pathname === '/' ? 'active' : ''}`}>
-                                                            Homepage 1
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/home2" className={`nav-item-mobile text-button link text-variant1 duration-300 has-line has-line ${pathname === '/homepages/home2' ? 'active' : ''}`}>
-                                                            Homepage 2
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link href="/homepages/home3" className={`nav-item-mobile text-button link text-variant1 duration-300 has-line has-line ${pathname === '/homepages/home3' ? 'active' : ''}`}>
-                                                            Homepage 3
-                                                        </Link>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                                        
                                         </div>
                                     </li>
                                     <li

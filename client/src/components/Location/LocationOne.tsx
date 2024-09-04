@@ -8,7 +8,7 @@ const LocationOne = () => {
     const router = useRouter()
 
     const handleClickContinents = (continents: string) => {
-        router.push(`/camp/topmap-grid?continents=${continents}`)
+        router.push(`/camp/tent-detail?id=1`)
     }
 
     return (

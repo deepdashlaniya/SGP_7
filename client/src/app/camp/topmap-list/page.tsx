@@ -1,18 +1,23 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
-import HeaderOne from '@/components/Header/HeaderOne'
-import SliderTwo from '@/components/Slider/SliderTwo'
-import Footer from '@/components/Footer/Footer'
-import tentData from '@/data/Tent.json'
-import { TentType } from '@/type/TentType'
-import TentItem from '@/components/Tent/TentItem'
-import HandlePagination from '@/components/Other/HandlePagination'
-import * as Icon from 'phosphor-react'
-import Slider from 'rc-slider'
-import 'rc-slider/assets/index.css'
-import { useSearchParams } from 'next/navigation'
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import HeaderOne from "@/components/Header/HeaderOne";
+import SliderTwo from "@/components/Slider/SliderTwo";
+import Footer from "@/components/Footer/Footer";
+import tentData from "@/data/Tent.json";
+import { TentType } from "@/type/TentType";
+import TentItem from "@/components/Tent/TentItem";
+import HandlePagination from "@/components/Other/HandlePagination";
+import * as Icon from "phosphor-react";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+import { useSearchParams } from "next/navigation";
+
+import ImageSlider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Image from "next/image";
 
 type Service = string;
 type Amenities = string;
@@ -20,25 +25,28 @@ type Activities = string;
 type Terrain = string;
 
 const TopMapList = () => {
-  const params = useSearchParams()
-  const categoryParams = params.get('category')
-  const continentsParams = params.get('continents')
-  const countryParams = params.get('country')
-  const [openSidebar, setOpenSidebar] = useState(false)
-  const [sortOption, setSortOption] = useState('');
-  const [service, setService] = useState<Service[]>([])
-  const [amenities, setAmenities] = useState<Amenities[]>([])
-  const [activities, setActivities] = useState<Activities[]>([])
-  const [terrain, setTerrain] = useState<Terrain[]>([])
-  const [priceRange, setPriceRange] = useState<{ min: number; max: number }>({ min: 0, max: 500 });
+  const params = useSearchParams();
+  const categoryParams = params.get("category");
+  const continentsParams = params.get("continents");
+  const countryParams = params.get("country");
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const [sortOption, setSortOption] = useState("");
+  const [service, setService] = useState<Service[]>([]);
+  const [amenities, setAmenities] = useState<Amenities[]>([]);
+  const [activities, setActivities] = useState<Activities[]>([]);
+  const [terrain, setTerrain] = useState<Terrain[]>([]);
+  const [priceRange, setPriceRange] = useState<{ min: number; max: number }>({
+    min: 0,
+    max: 500,
+  });
   const [currentPage, setCurrentPage] = useState(0);
   const [tentPerPage, setTentPerPage] = useState<number>(4);
   const tentsPerPage = tentPerPage;
   const offset = currentPage * tentsPerPage;
 
   const handleOpenSidebar = () => {
-    setOpenSidebar(!openSidebar)
-  }
+    setOpenSidebar(!openSidebar);
+  };
 
   const handleTentPerPage = (page: number) => {
     setTentPerPage(page);
@@ -114,91 +122,112 @@ const TopMapList = () => {
   };
 
   // Filter tent
-  let filteredData = tentData.filter(tent => {
+  let filteredData = tentData.filter((tent) => {
     let isDataCategoryMatch = true;
     if (categoryParams) {
-      isDataCategoryMatch = tent.category.toLowerCase() === categoryParams.toLowerCase()
+      isDataCategoryMatch =
+        tent.category.toLowerCase() === categoryParams.toLowerCase();
     }
 
     let isDataContinentsMatch = true;
     if (continentsParams) {
-      isDataContinentsMatch = tent.continents.toLowerCase() === continentsParams.toLowerCase()
+      isDataContinentsMatch =
+        tent.continents.toLowerCase() === continentsParams.toLowerCase();
     }
 
     let isDataCountryMatch = true;
     if (countryParams) {
-      isDataCountryMatch = tent.country.toLowerCase() === countryParams.toLowerCase()
+      isDataCountryMatch =
+        tent.country.toLowerCase() === countryParams.toLowerCase();
     }
 
     let isPriceRangeMatched = true;
     if (priceRange.min !== 0 || priceRange.max !== 500) {
-      isPriceRangeMatched = tent.price >= priceRange.min && tent.price <= priceRange.max;
+      isPriceRangeMatched =
+        tent.price >= priceRange.min && tent.price <= priceRange.max;
     }
 
     let isDataServiceMatched = true;
     if (service.length > 0) {
-      isDataServiceMatched = service.every(item => tent.services.includes(item))
+      isDataServiceMatched = service.every((item) =>
+        tent.services.includes(item)
+      );
     }
 
     let isDataAmenitiesMatched = true;
     if (amenities.length > 0) {
-      isDataAmenitiesMatched = amenities.every(item => tent.amenities.includes(item))
+      isDataAmenitiesMatched = amenities.every((item) =>
+        tent.amenities.includes(item)
+      );
     }
 
     let isDataActivitiesMatched = true;
     if (activities.length > 0) {
-      isDataActivitiesMatched = activities.every(item => tent.activities.includes(item))
+      isDataActivitiesMatched = activities.every((item) =>
+        tent.activities.includes(item)
+      );
     }
 
     let isDataTerrainMatched = true;
     if (terrain.length > 0) {
-      isDataTerrainMatched = terrain.every(item => tent.terrain.includes(item))
+      isDataTerrainMatched = terrain.every((item) =>
+        tent.terrain.includes(item)
+      );
     }
 
-    return isDataCategoryMatch && isDataContinentsMatch && isDataCountryMatch && isPriceRangeMatched && isDataServiceMatched && isDataAmenitiesMatched && isDataActivitiesMatched && isDataTerrainMatched
-  })
-
+    return (
+      isDataCategoryMatch &&
+      isDataContinentsMatch &&
+      isDataCountryMatch &&
+      isPriceRangeMatched &&
+      isDataServiceMatched &&
+      isDataAmenitiesMatched &&
+      isDataActivitiesMatched &&
+      isDataTerrainMatched
+    );
+  });
 
   // Create a copy array filtered to sort
   let sortedData = [...filteredData];
 
-  if (sortOption === 'starHighToLow') {
-    filteredData = sortedData.sort((a, b) => b.rate - a.rate)
+  if (sortOption === "starHighToLow") {
+    filteredData = sortedData.sort((a, b) => b.rate - a.rate);
   }
 
-  if (sortOption === 'priceHighToLow') {
-    filteredData = sortedData.sort((a, b) => b.price - a.price)
+  if (sortOption === "priceHighToLow") {
+    filteredData = sortedData.sort((a, b) => b.price - a.price);
   }
 
-  if (sortOption === 'priceLowToHigh') {
-    filteredData = sortedData.sort((a, b) => a.price - b.price)
+  if (sortOption === "priceLowToHigh") {
+    filteredData = sortedData.sort((a, b) => a.price - b.price);
   }
 
   if (filteredData.length === 0) {
-    filteredData = [{
-      id: 'no-data',
-      category: 'no-data',
-      name: 'no-data',
-      continents: 'no-data',
-      country: 'no-data',
-      location: 'no-data',
-      locationMap: {
-        lat: 0,
-        lng: 0
+    filteredData = [
+      {
+        id: "no-data",
+        category: "no-data",
+        name: "no-data",
+        continents: "no-data",
+        country: "no-data",
+        location: "no-data",
+        locationMap: {
+          lat: 0,
+          lng: 0,
+        },
+        rate: 0,
+        price: 0,
+        listImage: [],
+        image: "no-data",
+        shortDesc: "no-data",
+        description: "no-data",
+        services: [],
+        amenities: [],
+        activities: [],
+        terrain: [],
       },
-      rate: 0,
-      price: 0,
-      listImage: [],
-      image: 'no-data',
-      shortDesc: 'no-data',
-      description: 'no-data',
-      services: [],
-      amenities: [],
-      activities: [],
-      terrain: [],
-    }];
+    ];
   }
-
 
   // Find page number base on filteredData
   const pageCount = Math.ceil(filteredData.length / tentsPerPage);
@@ -214,95 +243,190 @@ const TopMapList = () => {
   if (filteredData.length > 0) {
     currentTents = filteredData.slice(offset, offset + tentsPerPage);
   } else {
-    currentTents = []
+    currentTents = [];
   }
 
   const handlePageChange = (selected: number) => {
     setCurrentPage(selected);
   };
 
+  const settings = {
+    arrows: true,
+    infinite: true,
+    speed: 300,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    touchThreshold: 100,
+    swipe: true,
+    swipeToSlide: true,
+    draggable: true,
+    useTransform: false,
+    centerMode: true,
+    centerPadding: "300px",
+    responsive: [
+      {
+        breakpoint: 640,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerPadding: "24px",
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          centerPadding: "160px",
+        },
+      },
+      {
+        breakpoint: 1340,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 2000,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
     <>
-      <div className='overflow-hidden'>
+      <div className="overflow-hidden">
         <HeaderOne />
-        <SliderTwo />
+        <div className="list-img-detail overflow-hidden">
+          <ImageSlider {...settings} className="h-full">
+            {tentData[0].listImage.map((img, index) => (
+              <div className="bg-img w-full aspect-[4/3]" key={index}>
+                <Image
+                  src={img}
+                  width={3000}
+                  height={3000}
+                  alt={img}
+                  priority={true}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </ImageSlider>
+        </div>
         <div className="lg:py-20 md:py-14 max-lg:mt-10 max-md:mt-40 py-10">
           <div className="container">
             <div className="heading flex items-center justify-between gap-6 flex-wrap">
               <div className="left flex items-center sm:gap-5 gap-3 max-sm:flex-wrap">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="show-filter-sidebar flex items-center gap-2 sm:px-4 px-3 py-2.5 border border-outline rounded-lg cursor-pointer duration-300 hover:bg-black hover:text-white"
-                    onClick={handleOpenSidebar}
-                  >
-                    <Icon.SlidersHorizontal className='text-xl' />
-                    <p>Show Filters</p>
+                <div className="filter-price">
+                  <div className="heading6">Price Range</div>
+                  <Slider
+                    range
+                    defaultValue={[0, 500]}
+                    min={0}
+                    max={500}
+                    onChange={handlePriceChange}
+                    className="mt-4"
+                  />
+                  <div className="price-block flex items-center justify-between flex-wrap mt-3">
+                    <div className="min flex items-center gap-1">
+                      <div>Min price:</div>
+                      <div className="price-min text-button">
+                        $<span>{priceRange.min}</span>
+                      </div>
+                    </div>
+                    <div className="max flex items-center gap-1">
+                      <div>Max price:</div>
+                      <div className="price-max text-button">
+                        $<span>{priceRange.max}</span>
+                      </div>
+                    </div>
                   </div>
-                  <Link href={'/camp/topmap-grid'}>
-                    <Icon.SquaresFour className='text-3xl cursor-pointer text-variant2 duration-300 hover:text-black' />
-                  </Link>
-                  <Link href={'/camp/topmap-list'}>
-                    <Icon.Rows className='text-3xl cursor-pointer text-black duration-300' />
-                  </Link>
                 </div>
                 <div className="line w-px h-7 bg-outline max-[400px]:hidden"></div>
-                <div className="body2">Showing {filteredData[0].id === 'no-data' ? 0 : offset + 1}-{filteredData[0].id === 'no-data' ? 0 : offset + currentTents.length} of {filteredData[0].id === 'no-data' ? 0 : filteredData.length}</div>
+                <div className="body2">
+                  Showing {filteredData[0].id === "no-data" ? 0 : offset + 1}-
+                  {filteredData[0].id === "no-data"
+                    ? 0
+                    : offset + currentTents.length}{" "}
+                  of{" "}
+                  {filteredData[0].id === "no-data" ? 0 : filteredData.length}
+                </div>
               </div>
               <div className="right flex items-center gap-3">
                 <div className="select-block relative">
                   <select
                     id="select-filter"
                     name="select-filter"
-                    className='py-2.5 pl-4 md:pr-14 pr-10 rounded-lg border border-line'
-                    onChange={(e) => { handleTentPerPage(Number(e.target.value)) }}
+                    className="py-2.5 pl-4 md:pr-14 pr-10 rounded-lg border border-line"
+                    onChange={(e) => {
+                      handleTentPerPage(Number(e.target.value));
+                    }}
                   >
                     <option value="4">4 Per Page</option>
                     <option value="8">8 Per Page</option>
                     <option value="12">12 Per Page</option>
                   </select>
-                  <Icon.CaretDown className='text-xl absolute top-1/2 -translate-y-1/2 md:right-4 right-2' />
+                  <Icon.CaretDown className="text-xl absolute top-1/2 -translate-y-1/2 md:right-4 right-2" />
                 </div>
                 <div className="select-block relative">
                   <select
                     id="select-filter"
                     name="select-filter"
-                    className='py-2.5 pl-4 md:pr-14 pr-10 rounded-lg border border-line'
-                    onChange={(e) => { handleSortChange(e.target.value) }}
-                    defaultValue={'Sorting'}
+                    className="py-2.5 pl-4 md:pr-14 pr-10 rounded-lg border border-line"
+                    onChange={(e) => {
+                      handleSortChange(e.target.value);
+                    }}
+                    defaultValue={"Sorting"}
                   >
-                    <option value="Sorting" disabled>Sort by (Defaut)</option>
+                    <option value="Sorting" disabled>
+                      Sort by (Defaut)
+                    </option>
                     <option value="starHighToLow">Best Review</option>
                     <option value="priceHighToLow">Price High To Low</option>
                     <option value="priceLowToHigh">Price Low To High</option>
                   </select>
-                  <Icon.CaretDown className='text-xl absolute top-1/2 -translate-y-1/2 md:right-4 right-2' />
+                  <Icon.CaretDown className="text-xl absolute top-1/2 -translate-y-1/2 md:right-4 right-2" />
                 </div>
               </div>
             </div>
 
             <div className="list-tent md:mt-10 mt-6 flex flex-col gap-10">
-              {currentTents.map((item) => (
-                item.id === 'no-data' ? (
-                  <div key={item.id} className="no-data-product">No tents match the selected criteria.</div>
+              {currentTents.map((item) =>
+                item.id === "no-data" ? (
+                  <div key={item.id} className="no-data-product">
+                    No tents match the selected criteria.
+                  </div>
                 ) : (
-                  <TentItem key={item.id} data={item} type='list' />
+                  <TentItem key={item.id} data={item} type="list" />
                 )
-              ))}
+              )}
             </div>
 
             {pageCount > 1 && (
               <div className="list-pagination flex items-center md:mt-10 mt-7">
-                <HandlePagination pageCount={pageCount} onPageChange={handlePageChange} />
+                <HandlePagination
+                  pageCount={pageCount}
+                  onPageChange={handlePageChange}
+                />
               </div>
             )}
           </div>
         </div>
 
         <div
-          className={`sidebar-filter style-top ${openSidebar ? 'open' : ''}`}
+          className={`sidebar-filter style-top ${openSidebar ? "open" : ""}`}
           onClick={handleOpenSidebar}
         >
-          <div className="sidebar-main" onClick={(e) => { e.stopPropagation() }}>
+          <div
+            className="sidebar-main"
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+          >
             <div className="container grid grid-cols-4 justify-between gap-24">
               <div>
                 <div className="filter-price">
@@ -313,19 +437,19 @@ const TopMapList = () => {
                     min={0}
                     max={500}
                     onChange={handlePriceChange}
-                    className='mt-4'
+                    className="mt-4"
                   />
                   <div className="price-block flex items-center justify-between flex-wrap mt-3">
                     <div className="min flex items-center gap-1">
                       <div>Min price:</div>
-                      <div className='price-min text-button'>$
-                        <span>{priceRange.min}</span>
+                      <div className="price-min text-button">
+                        $<span>{priceRange.min}</span>
                       </div>
                     </div>
                     <div className="max flex items-center gap-1">
                       <div>Max price:</div>
-                      <div className='price-max text-button'>$
-                        <span>{priceRange.max}</span>
+                      <div className="price-max text-button">
+                        $<span>{priceRange.max}</span>
                       </div>
                     </div>
                   </div>
@@ -334,8 +458,21 @@ const TopMapList = () => {
                 <div className="filter-service mt-8">
                   <div className="heading6">Services</div>
                   <div className="list-service flex flex-col gap-3 mt-3">
-                    {['reception desk', 'pet allowed', 'tour guide', 'breakfast', 'currency exchange', 'self-service laundry', 'cooking service', 'relaxation service', 'cleaning service'].map((item, index) => (
-                      <div key={index} className="service-item flex items-center justify-between">
+                    {[
+                      "reception desk",
+                      "pet allowed",
+                      "tour guide",
+                      "breakfast",
+                      "currency exchange",
+                      "self-service laundry",
+                      "cooking service",
+                      "relaxation service",
+                      "cleaning service",
+                    ].map((item, index) => (
+                      <div
+                        key={index}
+                        className="service-item flex items-center justify-between"
+                      >
                         <div className="left flex items-center cursor-pointer">
                           <div className="block-input">
                             <input
@@ -345,9 +482,18 @@ const TopMapList = () => {
                               checked={service.includes(item)}
                               onChange={() => handleService(item)}
                             />
-                            <Icon.CheckSquare size={20} weight='fill' className='icon-checkbox text-primary' />
+                            <Icon.CheckSquare
+                              size={20}
+                              weight="fill"
+                              className="icon-checkbox text-primary"
+                            />
                           </div>
-                          <label htmlFor={item} className="service-name capitalize pl-2 cursor-pointer">{item}</label>
+                          <label
+                            htmlFor={item}
+                            className="service-name capitalize pl-2 cursor-pointer"
+                          >
+                            {item}
+                          </label>
                         </div>
                       </div>
                     ))}
@@ -358,8 +504,25 @@ const TopMapList = () => {
               <div className="filter-amenities">
                 <div className="heading6">Amenities</div>
                 <div className="list-amenities flex flex-col gap-3 mt-3">
-                  {['parking', 'wifi', 'tv', 'toilet', 'bathtub', 'campfire', 'picnic table', 'trash', 'cooking equipment', 'refrigerator', 'microwave', 'dishwasher', 'coffee maker'].map((item, index) => (
-                    <div key={index} className="amenities-item flex items-center justify-between">
+                  {[
+                    "parking",
+                    "wifi",
+                    "tv",
+                    "toilet",
+                    "bathtub",
+                    "campfire",
+                    "picnic table",
+                    "trash",
+                    "cooking equipment",
+                    "refrigerator",
+                    "microwave",
+                    "dishwasher",
+                    "coffee maker",
+                  ].map((item, index) => (
+                    <div
+                      key={index}
+                      className="amenities-item flex items-center justify-between"
+                    >
                       <div className="left flex items-center cursor-pointer">
                         <div className="block-input">
                           <input
@@ -369,9 +532,18 @@ const TopMapList = () => {
                             checked={amenities.includes(item)}
                             onChange={() => handleAmenities(item)}
                           />
-                          <Icon.CheckSquare size={20} weight='fill' className='icon-checkbox text-primary' />
+                          <Icon.CheckSquare
+                            size={20}
+                            weight="fill"
+                            className="icon-checkbox text-primary"
+                          />
                         </div>
-                        <label htmlFor={item} className="amenities-name capitalize pl-2 cursor-pointer">{item}</label>
+                        <label
+                          htmlFor={item}
+                          className="amenities-name capitalize pl-2 cursor-pointer"
+                        >
+                          {item}
+                        </label>
                       </div>
                     </div>
                   ))}
@@ -381,8 +553,23 @@ const TopMapList = () => {
               <div className="filter-activities">
                 <div className="heading6">Activities</div>
                 <div className="list-activities flex flex-col gap-3 mt-3">
-                  {['hiking', 'swimming', 'fishing', 'wildlife watching', 'biking', 'boating', 'climbing', 'snow sports', 'horseback riding', 'surfing', 'wind sports'].map((item, index) => (
-                    <div key={index} className="activities-item flex items-center justify-between">
+                  {[
+                    "hiking",
+                    "swimming",
+                    "fishing",
+                    "wildlife watching",
+                    "biking",
+                    "boating",
+                    "climbing",
+                    "snow sports",
+                    "horseback riding",
+                    "surfing",
+                    "wind sports",
+                  ].map((item, index) => (
+                    <div
+                      key={index}
+                      className="activities-item flex items-center justify-between"
+                    >
                       <div className="left flex items-center cursor-pointer">
                         <div className="block-input">
                           <input
@@ -392,9 +579,18 @@ const TopMapList = () => {
                             checked={activities.includes(item)}
                             onChange={() => handleActivities(item)}
                           />
-                          <Icon.CheckSquare size={20} weight='fill' className='icon-checkbox text-primary' />
+                          <Icon.CheckSquare
+                            size={20}
+                            weight="fill"
+                            className="icon-checkbox text-primary"
+                          />
                         </div>
-                        <label htmlFor={item} className="activities-name capitalize pl-2 cursor-pointer">{item}</label>
+                        <label
+                          htmlFor={item}
+                          className="activities-name capitalize pl-2 cursor-pointer"
+                        >
+                          {item}
+                        </label>
                       </div>
                     </div>
                   ))}
@@ -404,8 +600,21 @@ const TopMapList = () => {
               <div className="filter-terrain">
                 <div className="heading6">Terrain</div>
                 <div className="list-terrain flex flex-col gap-3 mt-3">
-                  {['lake', 'beach', 'farm', 'forest', 'river', 'hot spring', 'swimming hole', 'desert', 'cave'].map((item, index) => (
-                    <div key={index} className="terrain-item flex items-center justify-between">
+                  {[
+                    "lake",
+                    "beach",
+                    "farm",
+                    "forest",
+                    "river",
+                    "hot spring",
+                    "swimming hole",
+                    "desert",
+                    "cave",
+                  ].map((item, index) => (
+                    <div
+                      key={index}
+                      className="terrain-item flex items-center justify-between"
+                    >
                       <div className="left flex items-center cursor-pointer">
                         <div className="block-input">
                           <input
@@ -415,9 +624,18 @@ const TopMapList = () => {
                             checked={terrain.includes(item)}
                             onChange={() => handleTerrain(item)}
                           />
-                          <Icon.CheckSquare size={20} weight='fill' className='icon-checkbox text-primary' />
+                          <Icon.CheckSquare
+                            size={20}
+                            weight="fill"
+                            className="icon-checkbox text-primary"
+                          />
                         </div>
-                        <label htmlFor={item} className="terrain-name capitalize pl-2 cursor-pointer">{item}</label>
+                        <label
+                          htmlFor={item}
+                          className="terrain-name capitalize pl-2 cursor-pointer"
+                        >
+                          {item}
+                        </label>
                       </div>
                     </div>
                   ))}
@@ -429,7 +647,7 @@ const TopMapList = () => {
         <Footer />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default TopMapList
+export default TopMapList;
